@@ -1,7 +1,10 @@
 package Endpoints
 
 const (
-	GetWalletBalanceEndpoint = "/balances"
-	PostWalletAddres         = "/wallets/Address"
-	GetTransactionHistory    = "/wallets/:walletAddress/transactions"
+	GetWalletBalanceEndpoint      = "/balance"
+	GetWalletBalancePriceEndpoint = "/balance/price"
+	PostWalletAddres              = "/wallets/Address"
+	BuyEth                        = "/buyeth"
+	SellEth                       = "/selleth"
+	GetTransactionHistory         = "/wallets/:walletAddress/transactions"
 )

@@ -9,7 +9,7 @@ type WalletRequest struct {
 	WalletAddress string `json:"walletAddress" binding:"required"`
 }
 
-func GetWalletBalance(c *gin.Context) {
+func PostWalletBalance(c *gin.Context) {
 	var req WalletRequest
 	err := c.ShouldBindJSON(&req)
 
@@ -31,6 +31,32 @@ func GetWalletBalance(c *gin.Context) {
 
 	c.JSON(200, gin.H{
 		"balance": string(balance),
+	})
+}
+
+func PostWalletBalancePrice(c *gin.Context) {
+	var req WalletRequest
+	err := c.ShouldBindJSON(&req)
+
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": "address parameter is required",
+		})
+		return
+	}
+
+	balance, err := Services.GetWalletBalancePrice(req.WalletAddress)
+
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"balance": balance.Balance,
+		"price":   balance.Price,
 	})
 }
 

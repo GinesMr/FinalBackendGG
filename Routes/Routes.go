@@ -11,8 +11,10 @@ func GetRoutes() *gin.Engine {
 
 	routesComplete := routes.Group("/api/v1")
 	{
-		routesComplete.GET(Endpoints.GetWalletBalanceEndpoint, Handlers.GetWalletBalance)
-		routesComplete.POST(Endpoints.PostWalletAddres, Handlers.PostWalletAddres)
+		routesComplete.POST(Endpoints.GetWalletBalanceEndpoint, Handlers.PostWalletBalance)
+		routesComplete.POST(Endpoints.BuyEth, Handlers.BuyEth)
+		routesComplete.POST(Endpoints.SellEth, Handlers.SellEth)
+		routesComplete.POST(Endpoints.GetWalletBalancePriceEndpoint, Handlers.PostWalletBalancePrice)
 	}
 
 	return routes
