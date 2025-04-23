@@ -1,6 +1,7 @@
 package Services
 
 import (
+	"awesomeProject/Internal/Models"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -9,20 +10,6 @@ import (
 	"strconv"
 	"strings"
 )
-
-type WalletResponse struct {
-	Result []struct {
-		BalanceFormatted string  `json:"balance_formatted"`
-		UsdPrice         float64 `json:"usd_price"`
-	} `json:"result"`
-}
-type WalletBalance struct {
-	Balance string `json:"balance"`
-}
-type WalletBalancePrice struct {
-	Balance string `json:"balance_formatted"`
-	Price   string `json:"usd_price"`
-}
 
 func GetWalletBalance(ad string) (string, error) {
 	API_KEY := os.Getenv("API_KEY")
@@ -53,7 +40,7 @@ func GetWalletBalance(ad string) (string, error) {
 	}
 	defer res.Body.Close()
 
-	var balance WalletBalance
+	var balance Models.WalletBalance
 	if err := json.NewDecoder(res.Body).Decode(&balance); err != nil {
 		return "", fmt.Errorf("error decoding response: %w", err)
 	}
@@ -61,7 +48,7 @@ func GetWalletBalance(ad string) (string, error) {
 	return balance.Balance, nil
 }
 
-func GetWalletBalancePrice(ad string) (WalletBalancePrice, error) {
+func GetWalletBalancePrice(ad string) (Models.WalletBalancePrice, error) {
 	API_KEY := os.Getenv("API_KEY")
 	BASE_URL := os.Getenv("URL4")
 	URL3 := os.Getenv("URL3")
@@ -73,12 +60,12 @@ func GetWalletBalancePrice(ad string) (WalletBalancePrice, error) {
 	REAL_URL := BASE_URL + ad + URL3
 
 	if _, err := url.Parse(REAL_URL); err != nil {
-		return WalletBalancePrice{}, fmt.Errorf("invalid URL: %w", err)
+		return Models.WalletBalancePrice{}, fmt.Errorf("invalid URL: %w", err)
 	}
 
 	req, err := http.NewRequest("GET", REAL_URL, nil)
 	if err != nil {
-		return WalletBalancePrice{}, fmt.Errorf("error creating request: %w", err)
+		return Models.WalletBalancePrice{}, fmt.Errorf("error creating request: %w", err)
 	}
 
 	req.Header.Add("Accept", "application/json")
@@ -86,19 +73,19 @@ func GetWalletBalancePrice(ad string) (WalletBalancePrice, error) {
 
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {
-		return WalletBalancePrice{}, fmt.Errorf("error making request: %w", err)
+		return Models.WalletBalancePrice{}, fmt.Errorf("error making request: %w", err)
 	}
 	defer res.Body.Close()
-	var response WalletResponse
+	var response Models.WalletResponse
 	if err := json.NewDecoder(res.Body).Decode(&response); err != nil {
-		return WalletBalancePrice{}, fmt.Errorf("error decoding response: %w", err)
+		return Models.WalletBalancePrice{}, fmt.Errorf("error decoding response: %w", err)
 	}
 	balanceFloat, parseErr := strconv.ParseFloat(response.Result[0].BalanceFormatted, 64)
 	if parseErr != nil {
-		return WalletBalancePrice{}, fmt.Errorf("error parsing balance: %w", parseErr)
+		return Models.WalletBalancePrice{}, fmt.Errorf("error parsing balance: %w", parseErr)
 	}
 	price := response.Result[0].UsdPrice * balanceFloat
-	balance := WalletBalancePrice{
+	balance := Models.WalletBalancePrice{
 		Balance: response.Result[0].BalanceFormatted,
 		Price:   fmt.Sprintf("%.2f", price),
 	}
