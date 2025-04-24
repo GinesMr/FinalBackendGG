@@ -4,7 +4,7 @@ const (
 	GetWalletBalanceEndpoint      = "/balance"
 	GetWalletBalancePriceEndpoint = "/balance/price"
 	PostWalletAddres              = "/wallets/Address"
-	BuyEth                        = "/buyeth"
+	SendEth                       = "/buyeth"
 	SellEth                       = "/selleth"
 	GetTransactionHistory         = "/wallets/:walletAddress/transactions"
 )

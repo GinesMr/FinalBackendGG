@@ -1,16 +1,13 @@
 package Handlers
 
 import (
+	"awesomeProject/Internal/Models"
 	"awesomeProject/Internal/Services"
 	"github.com/gin-gonic/gin"
 )
 
-type WalletRequest struct {
-	WalletAddress string `json:"walletAddress" binding:"required"`
-}
-
 func PostWalletBalance(c *gin.Context) {
-	var req WalletRequest
+	var req Models.WalletRequest
 	err := c.ShouldBindJSON(&req)
 
 	if err != nil {
@@ -35,7 +32,7 @@ func PostWalletBalance(c *gin.Context) {
 }
 
 func PostWalletBalancePrice(c *gin.Context) {
-	var req WalletRequest
+	var req Models.WalletRequest
 	err := c.ShouldBindJSON(&req)
 
 	if err != nil {
@@ -60,7 +57,25 @@ func PostWalletBalancePrice(c *gin.Context) {
 	})
 }
 
-func BuyEth(c *gin.Context) {
+func SendEth(c *gin.Context) {
+	var res Models.BuyResponse
+	err := c.ShouldBindJSON(&res)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": "One or more parameters are missing",
+		})
+	}
+	err = Services.SendEthFun(res.PrivateKey, res.ReciveAddress, res.Amount)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": err.Error(),
+		})
+	}
+	if err == nil {
+		c.JSON(200, gin.H{
+			"transaction": "success",
+		})
+	}
 
 }
 

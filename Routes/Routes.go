@@ -12,7 +12,7 @@ func GetRoutes() *gin.Engine {
 	routesComplete := routes.Group("/api/v1")
 	{
 		routesComplete.POST(Endpoints.GetWalletBalanceEndpoint, Handlers.PostWalletBalance)
-		routesComplete.POST(Endpoints.BuyEth, Handlers.BuyEth)
+		routesComplete.POST(Endpoints.SendEth, Handlers.SendEth)
 		routesComplete.POST(Endpoints.SellEth, Handlers.SellEth)
 		routesComplete.POST(Endpoints.GetWalletBalancePriceEndpoint, Handlers.PostWalletBalancePrice)
 	}
