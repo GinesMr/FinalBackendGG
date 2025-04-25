@@ -65,7 +65,7 @@ func SendEth(c *gin.Context) {
 			"error": "One or more parameters are missing",
 		})
 	}
-	err = Services.SendEthFun(res.PrivateKey, res.ReciveAddress, res.Amount)
+	err = Services.SendEthFun(res.ReciveAddress, res.PrivateKey, res.Amount)
 	if err != nil {
 		c.JSON(400, gin.H{
 			"error": err.Error(),

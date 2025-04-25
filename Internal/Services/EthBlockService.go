@@ -13,7 +13,7 @@ import (
 )
 
 func SendEthFun(reciveAddres string, walletKey string, amount string) error {
-	ethcli, err := ethclient.Dial("https://eth-sepolia.g.alchemy.com/v2/LQf-7XOeuprlZ7AhXdViw8eaFEHAvyXf")
+	ethcli, err := ethclient.Dial("https://eth-sepolia.g.alchemy.com/v2/LQf-7XOeuprlZ7AhXdViw8eaFEHAvyXf") //ENV
 	if err != nil {
 		log.Fatalf("Failed to connect ETH client")
 	}
