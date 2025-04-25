@@ -1,5 +1,7 @@
 package Models
 
 type PriRequest struct {
-	Precio int `json:"precio" binding:"required"`
+	Result []struct {
+		USDPrice float64 `json:"usd_price"`
+	} `json:"result"`
 }

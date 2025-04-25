@@ -84,3 +84,18 @@ func SellEth(c *gin.Context) {
 }
 func GetWalletTransactions(c *gin.Context) {
 }
+
+func EthPrice(c *gin.Context) {
+	res, err := Services.EthPriceService()
+
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+	c.JSON(200, gin.H{
+		"price": res.Result[0].UsdPrice,
+	})
+
+}

@@ -84,10 +84,36 @@ func GetWalletBalancePrice(ad string) (Models.WalletBalancePrice, error) {
 	if parseErr != nil {
 		return Models.WalletBalancePrice{}, fmt.Errorf("error parsing balance: %w", parseErr)
 	}
-	price := response.Result[0].UsdPrice * balanceFloat
+	EthRealPriceNoFake4k, err := EthPriceService()
+	if err != nil {
+		return Models.WalletBalancePrice{}, fmt.Errorf("error getting ETH price: %w", err)
+	}
+	price := EthRealPriceNoFake4k.Result[0].UsdPrice * balanceFloat
 	balance := Models.WalletBalancePrice{
 		Balance: response.Result[0].BalanceFormatted,
 		Price:   fmt.Sprintf("%.2f", price),
 	}
 	return balance, nil
+}
+
+// Only for testing purpose
+func EthPriceService() (Models.WalletResponse, error) {
+
+	url := os.Getenv("URL_PRUEBA")
+
+	req, _ := http.NewRequest("GET", url, nil)
+
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("X-API-Key", os.Getenv("API_KEY"))
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+
+	var price Models.WalletResponse
+	if err := json.NewDecoder(res.Body).Decode(&price); err != nil {
+		return Models.WalletResponse{}, fmt.Errorf("error decoding response: %w", err)
+	}
+
+	return price, nil
 }

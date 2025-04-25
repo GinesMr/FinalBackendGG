@@ -6,5 +6,6 @@ const (
 	PostWalletAddres              = "/wallets/Address"
 	SendEth                       = "/buyeth"
 	SellEth                       = "/selleth"
+	EthPrice                      = "/ethprice"
 	GetTransactionHistory         = "/wallets/:walletAddress/transactions"
 )
