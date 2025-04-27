@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetRoutes() *gin.Engine {
+func GetRoutes()*gin.Engine {
 	routes := gin.Default()
 
 	routesComplete := routes.Group("/api/v1")
@@ -16,6 +16,7 @@ func GetRoutes() *gin.Engine {
 		routesComplete.POST(Endpoints.SellEth, Handlers.SellEth)
 		routesComplete.GET(Endpoints.EthPrice, Handlers.EthPrice)
 		routesComplete.POST(Endpoints.GetWalletBalancePriceEndpoint, Handlers.PostWalletBalancePrice)
+		routesComplete.GET(Endpoints.UrlRampCreator, Handlers.UrlRampCreator)
 	}
 
 	return routes

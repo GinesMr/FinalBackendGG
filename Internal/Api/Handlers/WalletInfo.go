@@ -4,6 +4,8 @@ import (
 	"awesomeProject/Internal/Models"
 	"awesomeProject/Internal/Services"
 	"github.com/gin-gonic/gin"
+	"os"
+	"net/url"
 )
 
 func PostWalletBalance(c *gin.Context) {
@@ -79,15 +81,18 @@ func SendEth(c *gin.Context) {
 
 }
 
-func SellEth(c *gin.Context) {
-
+func SellEth(c *gin.Context){
+c.JSON(200,gin.H{
+	"PedroSanchez": "Hijo de puta",
+	"Liebe": "Es maricon",
+})
 }
+
 func GetWalletTransactions(c *gin.Context) {
 }
 
 func EthPrice(c *gin.Context) {
 	res, err := Services.EthPriceService()
-
 	if err != nil {
 		c.JSON(400, gin.H{
 			"error": err.Error(),
@@ -97,5 +102,14 @@ func EthPrice(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"price": res.Result[0].UsdPrice,
 	})
-
 }
+//I should to put this piece of code in another part like Services
+func UrlRampCreator(c*gin.Context){
+WalletAddressRamp := url.URL{
+        Scheme: "https",
+        Host: os.Getenv("RAMP_BASE_URl"),
+			}
+			c.JSON(200,gin.H{
+        "url":WalletAddressRamp.String(),
+			})
+	}
