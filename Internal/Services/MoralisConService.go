@@ -95,21 +95,37 @@ func GetWalletBalancePrice(ad string) (Models.WalletBalancePrice, error) {
 	}
 	return balance, nil
 }
+func GetTransactionHistory(ad string) (Models.TransactionResponse, error) {
+	API_KEY := os.Getenv("API_KEY")
+	BASE_URL := os.Getenv("TRANS_URL")
+	URL3 := os.Getenv("TRANS_URL2")
+	RURL := BASE_URL + ad + URL3
+	req, err := http.NewRequest("GET", RURL, nil)
+	if err != nil {
+		return Models.TransactionResponse{}, fmt.Errorf("error creating request: %w", err)
+	}
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("X-API-Key", API_KEY)
+	res, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return Models.TransactionResponse{}, fmt.Errorf("error making request: %w", err)
+	}
+	defer res.Body.Close()
+	var transaction Models.TransactionResponse
+	if err := json.NewDecoder(res.Body).Decode(&transaction); err != nil {
+		return Models.TransactionResponse{}, fmt.Errorf("error decoding response: %w", err)
+	}
+	return transaction, nil
+}
 
 // Only for testing purpose
 func EthPriceService() (Models.WalletResponse, error) {
-
 	url := os.Getenv("URL_PRUEBA")
-
 	req, _ := http.NewRequest("GET", url, nil)
-
 	req.Header.Add("Accept", "application/json")
 	req.Header.Add("X-API-Key", os.Getenv("API_KEY"))
-
 	res, _ := http.DefaultClient.Do(req)
-
 	defer res.Body.Close()
-
 	var price Models.WalletResponse
 	if err := json.NewDecoder(res.Body).Decode(&price); err != nil {
 		return Models.WalletResponse{}, fmt.Errorf("error decoding response: %w", err)

@@ -7,6 +7,6 @@ const (
 	SendEth                       = "/buyeth"
 	SellEth                       = "/selleth"
 	EthPrice                      = "/ethprice"
-	GetTransactionHistory         = "/wallets/:walletAddress/transaction/"	
-	UrlRampCreator         = "/urlramp"
+	GetTransactionHistory         = "/transactionhistory"
+	UrlRampCreator                = "/urlramp"
 )
