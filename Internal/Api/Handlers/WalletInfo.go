@@ -70,7 +70,6 @@ func SendEth(c *gin.Context) {
 	}
 
 }
-
 func SellEth(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"PedroSanchez": "Hijo de puta",
@@ -89,7 +88,7 @@ func GetWalletTransactions(c *gin.Context) {
 	res, err := Services.GetTransactionHistory(req.WalletAddress)
 	if err != nil {
 		c.JSON(400, gin.H{
-			"error": err.Error(),
+			"errorggg": err.Error(),
 		})
 	}
 	c.JSON(200, gin.H{

@@ -56,7 +56,6 @@ func GetWalletBalancePrice(ad string) (Models.WalletBalancePrice, error) {
 	if !strings.HasPrefix(BASE_URL, "https://") {
 		BASE_URL = "https://" + BASE_URL
 	}
-
 	REAL_URL := BASE_URL + ad + URL3
 
 	if _, err := url.Parse(REAL_URL); err != nil {

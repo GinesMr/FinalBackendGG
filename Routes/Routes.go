@@ -16,7 +16,7 @@ func GetRoutes() *gin.Engine {
 		routesComplete.GET(Endpoints.EthPrice, Handlers.EthPrice)
 		routesComplete.POST(Endpoints.GetWalletBalancePriceEndpoint, Handlers.PostWalletBalancePrice)
 		routesComplete.GET(Endpoints.UrlRampCreator, Handlers.UrlSender)
-		routesComplete.GET(Endpoints.GetTransactionHistory, Handlers.GetWalletTransactions)
+		routesComplete.POST(Endpoints.GetTransactionHistory, Handlers.GetWalletTransactions)
 	}
 	return routes
 }
