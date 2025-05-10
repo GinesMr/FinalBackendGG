@@ -15,8 +15,8 @@ func GetRoutes() *gin.Engine {
 		routesComplete.POST(Endpoints.SellEth, Handlers.SellEth)
 		routesComplete.GET(Endpoints.EthPrice, Handlers.EthPrice)
 		routesComplete.POST(Endpoints.GetWalletBalancePriceEndpoint, Handlers.PostWalletBalancePrice)
-		routesComplete.GET(Endpoints.UrlRampCreator, Handlers.UrlSender)
 		routesComplete.POST(Endpoints.GetTransactionHistory, Handlers.GetWalletTransactions)
+		routesComplete.POST(Endpoints.GetNftCollection, Handlers.GetNftCollection)
 	}
 	return routes
 }

@@ -109,9 +109,21 @@ func EthPrice(c *gin.Context) {
 	})
 }
 
-func UrlSender(c *gin.Context) {
-	res := Services.UrlRampCreator
+func GetNftCollection(c *gin.Context) {
+	var req Models.WalletRequest
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": "address parameter is required",
+		})
+	}
+	res, err := Services.NftCollection(req.WalletAddress)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"errorggg": err.Error(),
+		})
+	}
 	c.JSON(200, gin.H{
-		"result": res,
+		"nftcollect": res.Result,
 	})
 }

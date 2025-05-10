@@ -8,5 +8,5 @@ const (
 	SellEth                       = "/selleth"
 	EthPrice                      = "/ethprice"
 	GetTransactionHistory         = "/transactionhistory"
-	UrlRampCreator                = "/urlramp"
+	GetNftCollection              = "/nftcollection"
 )
